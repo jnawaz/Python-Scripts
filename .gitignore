@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # Created by https://www.gitignore.io/api/python,pycharm
 
@@ -65,6 +66,8 @@ fabric.properties
 .idea/sonarlint
 
 ### Python ###
+=======
+>>>>>>> 2e77dca83124e0bbc893bcf146524c483258525b
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -110,7 +113,11 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+<<<<<<< HEAD
 *,cover
+=======
+*.cover
+>>>>>>> 2e77dca83124e0bbc893bcf146524c483258525b
 .hypothesis/
 
 # Translations
@@ -164,4 +171,9 @@ ENV/
 # mkdocs documentation
 /site
 
+<<<<<<< HEAD
 # End of https://www.gitignore.io/api/python,pycharm
+=======
+# mypy
+.mypy_cache/
+>>>>>>> 2e77dca83124e0bbc893bcf146524c483258525b
