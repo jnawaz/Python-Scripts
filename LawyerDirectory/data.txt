@@ -1,0 +1,19 @@
+Name
+Address
+Tel
+----
+Solicitor Details
+Type
+SRA ID
+SRA Regulated
+Tel
+Email
+
+Facilities
+
+----
+Areas of practice - branch
+Areas of practice - org
+People, offices and structure
+Language Branch
+Language Org

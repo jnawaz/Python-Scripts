@@ -54,9 +54,6 @@ def parseMosqueInfo(mosque_info_html, mosque_name):
         except:
             print "not found"
 
-
-
-
 def parseUrl(symbolicUrl):
     cleanedUrl = str(symbolicUrl)
     cleanedUrl = cleanedUrl.replace("<a href=\"../../../../../mosques", "")
