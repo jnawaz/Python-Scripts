@@ -1,22 +1,26 @@
 from selenium import webdriver
 import os
+from sys import platform
 
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.keys import Keys
 
 driver = webdriver.Chrome(executable_path=os.popen('which chromedriver').read().strip())
 driver.implicitly_wait(10.0)
 baseurl = 'https://sra.org.uk/consumers/register/'
 driver.get(baseurl)
 filename = "lawyer-directory.csv"
-firmCount = {
-    "Law": 2424,
-    "Legal": 1245,
-    "Solicitor": 4728,
-    "Lawyer": 202,
-    "Ltd": 2749,
-    "Limited": 8311,
-    "LLP": 2449
-}
+
+
+def close_window():
+    if platform == "darwin":
+        driver.switch_to.window(driver.window_handles[1])
+        driver.close()
+
+
+def open_firm_in_new_tab(firm_link):
+    driver.execute_script("window.open( \"" + firm_link + "\", '_blank')")
+
 
 initialResults = 5
 
@@ -31,7 +35,8 @@ try:
     searchBox.click()
     searchBox.send_keys('Law')
 
-    searchButton = driver.find_element_by_xpath('/html/body/div[1]/section/div/article/div/div[2]/form/div[1]/div/button/i')
+    searchButton = driver.find_element_by_xpath(
+        '/html/body/div[1]/section/div/article/div/div[2]/form/div[1]/div/button/i')
     searchButton.click()
 
     # Total Firms by Search Term
@@ -39,17 +44,24 @@ try:
 
     showMoreLink = driver.find_element_by_xpath('/html/body/div[1]/section/div/article/div/div[4]/div[1]/div[1]/div/a')
 
-    totalNumberOfFirmsElement = driver.find_element_by_xpath('/html/body/div[1]/section/div/article/div/div[4]/div[1]/div[1]/div')
-    totalFirms = int(totalNumberOfFirmsElement.text[22:26]) + initialResults
-
+    totalNumberOfFirmsElement = driver.find_element_by_xpath(
+        '/html/body/div[1]/section/div/article/div/div[4]/div[1]/div[1]/div')
+    totalFirms = int(totalNumberOfFirmsElement.text[22:26])
     # timesToClickShowMore = round(totalFirms / 5) - 1
 
-    for i in range(0, totalFirms):
-        if i > 0 and i % 5 == 0:
-            print(str(i))
+    for i in range(1, totalFirms + 1):
+        firmRow = driver.find_element_by_id('firm-row-id-' + str(i))
+        firmLink = firmRow.find_element_by_xpath(
+            "/html/body/div[1]/section/div/article/div/div[4]/div[1]/article/ul/li["+str(i)+"]/a").get_attribute("href")
+
+        open_firm_in_new_tab(firmLink)
+
+        # loads 50 at a time, but after the first 5 are processed
+        if i % 5 == 0:
             showMoreLink.click()
-        else:
-            print("first 5")
+
+
+
     print("test")
 
 except NoSuchElementException:
